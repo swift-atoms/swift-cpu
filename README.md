@@ -1,4 +1,4 @@
-# CPU Primitives
+# CPU
 
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
 
@@ -13,7 +13,7 @@ A `CPU` namespace of policy-free, portable wrappers over CPU-specific instructio
 The atomics order a *single* load or store on memory you own through a raw pointer — an mmap'd ring buffer, shared-memory IPC, or a lock-free structure — rather than a Swift `Atomic<T>`. They are lighter than a standalone fence (`ldar`/`stlr` on ARM64, not `dmb`).
 
 ```swift
-import CPU_Primitives
+import CPU
 
 // A producer publishes a ring-buffer tail; a consumer observes it.
 // The index lives in memory both sides share directly, not in a Swift `Atomic<T>`.
@@ -32,7 +32,7 @@ withUnsafeMutablePointer(to: &tail) { slot in
 `CPU.Cache.Padded` heap-allocates its value on its own 128-byte cache line, so a write-contended atomic cannot false-share with read-mostly neighbours (the sharded-cursor pattern). It wraps `~Copyable` values, which makes `Atomic` and `Mutex` the primary use case.
 
 ```swift
-import CPU_Primitives
+import CPU
 import Synchronization
 
 let cursor = CPU.Cache.Padded(Atomic<Int>(0))
@@ -42,7 +42,7 @@ cursor.value.store(42, ordering: .releasing)
 `CPU.Integrity.Cyclic.Castagnoli` computes CRC-32C — the checksum used by iSCSI, NVMe, and SCTP — on the hardware CRC instruction where present (SSE4.2 / the ARMv8 CRC extension), with a software table fallback. This is *not* the IEEE polynomial used by Ethernet and ZIP.
 
 ```swift
-import CPU_Primitives
+import CPU
 
 let bytes: [UInt8] = Array("123456789".utf8)
 let checksum = bytes.withUnsafeBytes { buffer in
@@ -59,7 +59,7 @@ print(checksum.rawValue)   // 0xE3069283 — the CRC-32C reference check value
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-primitives/swift-cpu-primitives.git", branch: "main")
+    .package(url: "https://github.com/swift-molecules/swift-cpu.git", branch: "main")
 ]
 ```
 
@@ -67,7 +67,7 @@ dependencies: [
 .target(
     name: "App",
     dependencies: [
-        .product(name: "CPU Primitives", package: "swift-cpu-primitives"),
+        .product(name: "CPU", package: "swift-cpu"),
     ]
 )
 ```
@@ -82,8 +82,8 @@ Two library products over an internal C shim. Depends only on the `Binary` primi
 
 | Product | Target | Purpose |
 |---------|--------|---------|
-| `CPU Primitives` | `Sources/CPU Primitives/` | The `CPU` namespace: pointer atomics (`CPU.Atomic`), memory barriers (`CPU.Barrier`), cache hints (`CPU.Cache` prefetch + `CPU.Cache.Padded`), spin-wait (`CPU.Spin`), hardware CRC-32C (`CPU.Integrity.Cyclic.Castagnoli`), and high-resolution timestamps (`CPU.Timestamp`). Backed by the internal `CPU Shims` C target. |
-| `CPU Primitives Test Support` | `Tests/Support/` | Re-exports the main target for downstream test consumers. |
+| `CPU` | `Sources/CPU/` | The `CPU` namespace: pointer atomics (`CPU.Atomic`), memory barriers (`CPU.Barrier`), cache hints (`CPU.Cache` prefetch + `CPU.Cache.Padded`), spin-wait (`CPU.Spin`), hardware CRC-32C (`CPU.Integrity.Cyclic.Castagnoli`), and high-resolution timestamps (`CPU.Timestamp`). Backed by the internal `CPU Shims` C target. |
+| `CPU Test Support` | `Tests/Support/` | Re-exports the main target for downstream test consumers. |
 
 Foundation-free.
 

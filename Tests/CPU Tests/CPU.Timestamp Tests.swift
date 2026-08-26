@@ -1,6 +1,6 @@
 import Testing
 
-@testable import CPU_Primitives
+@testable import CPU
 
 @Suite
 struct `CPU.Timestamp Tests` {

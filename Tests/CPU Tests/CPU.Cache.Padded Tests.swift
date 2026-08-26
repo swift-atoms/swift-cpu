@@ -1,7 +1,7 @@
 import Synchronization
 import Testing
 
-@testable import CPU_Primitives
+@testable import CPU
 
 @Suite
 struct `CPU.Cache.Padded Tests` {

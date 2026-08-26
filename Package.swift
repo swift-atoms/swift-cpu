@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-cpu-primitives",
+    name: "swift-cpu",
     platforms: [
         .macOS(.v27),
         .iOS(.v27),
@@ -13,25 +13,25 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "CPU Primitives",
-            targets: ["CPU Primitives"]
+            name: "CPU",
+            targets: ["CPU"]
         ),
         .library(
-            name: "CPU Primitives Test Support",
-            targets: ["CPU Primitives Test Support"]
+            name: "CPU Test Support",
+            targets: ["CPU Test Support"]
         ),
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-binary-primitives.git",
+            url: "https://github.com/swift-molecules/swift-binary.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-binary-serializer-primitives.git",
+            url: "https://github.com/swift-molecules/swift-binary-serializer.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-bit-primitives.git",
+            url: "https://github.com/swift-molecules/swift-bit.git",
             branch: "main"
         ),
     ],
@@ -41,29 +41,29 @@ let package = Package(
             dependencies: []
         ),
         .target(
-            name: "CPU Primitives",
+            name: "CPU",
             dependencies: [
                 .target(name: "CPU Shims"),
-                .product(name: "Binary Primitives", package: "swift-binary-primitives"),
+                .product(name: "Binary", package: "swift-binary"),
                 .product(
-                    name: "Binary Serializable Primitives",
-                    package: "swift-binary-serializer-primitives"
+                    name: "Binary Serializable",
+                    package: "swift-binary-serializer"
                 ),
             ]
         ),
         .target(
-            name: "CPU Primitives Test Support",
+            name: "CPU Test Support",
             dependencies: [
-                "CPU Primitives",
-                .product(name: "Bit Primitives Test Support", package: "swift-bit-primitives"),
+                "CPU",
+                .product(name: "Bit Test Support", package: "swift-bit"),
             ],
             path: "Tests/Support"
         ),
         .testTarget(
-            name: "CPU Primitives Tests",
+            name: "CPU Tests",
             dependencies: [
-                "CPU Primitives",
-                "CPU Primitives Test Support",
+                "CPU",
+                "CPU Test Support",
             ]
         ),
     ],
