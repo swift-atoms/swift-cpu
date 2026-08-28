@@ -59,7 +59,7 @@ print(checksum.rawValue)   // 0xE3069283 — the CRC-32C reference check value
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-molecules/swift-cpu.git", branch: "main")
+    .package(url: "https://github.com/swift-atoms/swift-cpu.git", branch: "main")
 ]
 ```
 
@@ -78,7 +78,7 @@ Requires Swift 6.3.1 and macOS 26 / iOS 26 / tvOS 26 / watchOS 26 / visionOS 26 
 
 ## Architecture
 
-Two library products over an internal C shim. Depends only on the `Binary` primitives for its `Binary.Serializable` conformances.
+Two library products over an internal C shim. The production target has no package dependencies. Binary serialization conformances live in the separate `CPU Binary Serializer` integration product.
 
 | Product | Target | Purpose |
 |---------|--------|---------|

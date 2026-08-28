@@ -23,15 +23,7 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-molecules/swift-binary.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-molecules/swift-binary-serializer.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-molecules/swift-bit.git",
+            url: "https://github.com/swift-atoms/swift-bit.git",
             branch: "main"
         ),
     ],
@@ -44,17 +36,12 @@ let package = Package(
             name: "CPU",
             dependencies: [
                 .target(name: "CPU Shims"),
-                .product(name: "Binary", package: "swift-binary"),
-                .product(
-                    name: "Binary Serializable",
-                    package: "swift-binary-serializer"
-                ),
             ]
         ),
         .target(
             name: "CPU Test Support",
             dependencies: [
-                "CPU",
+                .target(name: "CPU"),
                 .product(name: "Bit Test Support", package: "swift-bit"),
             ],
             path: "Tests/Support"
@@ -62,8 +49,8 @@ let package = Package(
         .testTarget(
             name: "CPU Tests",
             dependencies: [
-                "CPU",
-                "CPU Test Support",
+                .target(name: "CPU"),
+                .target(name: "CPU Test Support"),
             ]
         ),
     ],
