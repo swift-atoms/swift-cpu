@@ -31,3 +31,5 @@ extension CPU.Integrity.Cyclic.Checksum {
         lhs.rawValue < rhs.rawValue
     }
 }
+
+extension CPU.Integrity.Cyclic.Checksum: Binary.Serializable {}

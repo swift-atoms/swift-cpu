@@ -25,3 +25,5 @@ extension CPU.Timestamp {
 
     public static var read: Read { Read() }
 }
+
+extension CPU.Timestamp: Binary.Serializable {}

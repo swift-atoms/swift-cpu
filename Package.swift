@@ -17,15 +17,24 @@ let package = Package(
             targets: ["CPU"]
         ),
         .library(
-            name: "CPU Standard Library Integration",
-            targets: ["CPU Standard Library Integration"]
-        ),
-        .library(
-            name: "CPU Apple Foundation Integration",
-            targets: ["CPU Apple Foundation Integration"]
+            name: "CPU Test Support",
+            targets: ["CPU Test Support"]
         ),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(
+            url: "https://github.com/swift-molecules/swift-binary.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-binary-serializer.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-bit.git",
+            branch: "main"
+        ),
+    ],
     targets: [
         .target(
             name: "CPU Shims",
@@ -34,23 +43,28 @@ let package = Package(
         .target(
             name: "CPU",
             dependencies: [
-                .target(name: "CPU Shims")
+                .target(name: "CPU Shims"),
+                .product(name: "Binary", package: "swift-binary"),
+                .product(
+                    name: "Binary Serializable",
+                    package: "swift-binary-serializer"
+                ),
             ]
         ),
         .target(
-            name: "CPU Standard Library Integration",
-            dependencies: ["CPU"]
-        ),
-        .target(
-            name: "CPU Apple Foundation Integration",
+            name: "CPU Test Support",
             dependencies: [
                 "CPU",
-                "CPU Standard Library Integration",
-            ]
+                .product(name: "Bit Test Support", package: "swift-bit"),
+            ],
+            path: "Tests/Support"
         ),
         .testTarget(
             name: "CPU Tests",
-            dependencies: ["CPU"]
+            dependencies: [
+                "CPU",
+                "CPU Test Support",
+            ]
         ),
     ],
     swiftLanguageModes: [.v6]
