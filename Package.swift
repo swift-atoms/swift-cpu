@@ -21,12 +21,7 @@ let package = Package(
             targets: ["CPU Test Support"]
         ),
     ],
-    dependencies: [
-        .package(
-            url: "https://github.com/swift-atoms/swift-bit.git",
-            branch: "main"
-        ),
-    ],
+    dependencies: [],
     targets: [
         .target(
             name: "CPU Shims",
@@ -42,7 +37,6 @@ let package = Package(
             name: "CPU Test Support",
             dependencies: [
                 .target(name: "CPU"),
-                .product(name: "Bit Test Support", package: "swift-bit"),
             ],
             path: "Tests/Support"
         ),
