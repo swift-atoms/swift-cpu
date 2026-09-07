@@ -1,5 +1,3 @@
-public import CPU
-
 extension Swift.Int {
 
     @inlinable

@@ -13,12 +13,12 @@ let package = Package(
     ],
     products: [
         .library(name: "CPU", targets: ["CPU"]),
-        .library(name: "CPU Standard Library Integration", targets: ["CPU Standard Library Integration"]),
-        .library(name: "CPU Foundation Library Integration", targets: ["CPU Foundation Library Integration"]),
+
+        .library(name: "CPU Foundation Integration", targets: ["CPU Foundation Integration"]),
         .library(name: "CPU Test Support", targets: ["CPU Test Support"]),
     ],
     dependencies: [
-        .package(path: "../../swift-support/swift-cpu-shims"),
+        .package(url: "https://github.com/swift-institute/swift-cpu-shims.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-cardinal.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-ordinal.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-tagged.git", branch: "main"),
@@ -32,24 +32,16 @@ let package = Package(
                 .product(name: "Cardinal", package: "swift-cardinal"),
                 .product(name: "Ordinal", package: "swift-ordinal"),
                 .product(name: "Tagged", package: "swift-tagged"),
-
             ],
             path: "Sources/CPU"
         ),
+        
         .target(
-            name: "CPU Standard Library Integration",
+            name: "CPU Foundation Integration",
             dependencies: [
                 .target(name: "CPU"),
             ],
-            path: "Sources/CPU Standard Library Integration"
-        ),
-        .target(
-            name: "CPU Foundation Library Integration",
-            dependencies: [
-                .target(name: "CPU"),
-                .target(name: "CPU Standard Library Integration"),
-            ],
-            path: "Sources/CPU Foundation Library Integration"
+            path: "Sources/CPU Foundation Integration"
         ),
         .target(
             name: "CPU Test Support",
@@ -63,8 +55,7 @@ let package = Package(
             dependencies: [
                 .target(name: "CPU"),
                 .target(name: "CPU Test Support"),
-                .target(name: "CPU Standard Library Integration"),
-                .target(name: "CPU Foundation Library Integration"),
+                .target(name: "CPU Foundation Integration"),
             ],
             path: "Tests/CPU Tests"
         ),

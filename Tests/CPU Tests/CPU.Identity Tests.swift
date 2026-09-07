@@ -1,5 +1,4 @@
 import CPU
-import CPU_Standard_Library_Integration
 import Testing
 
 @Suite struct CPUIdentityTests {

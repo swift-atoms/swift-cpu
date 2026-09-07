@@ -39,5 +39,3 @@ extension CPU.Cache.Padded where T: ~Copyable {
         }
     }
 }
-
-extension CPU.Cache.Padded: @unchecked Sendable where T: ~Copyable & Sendable {}
