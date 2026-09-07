@@ -12,26 +12,36 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        .library(
-            name: "CPU",
-            targets: ["CPU"]
-        ),
-        .library(
-            name: "CPU Test Support",
-            targets: ["CPU Test Support"]
-        ),
+        .library(name: "CPU", targets: ["CPU"]),
+        .library(name: "CPU Standard Library Integration", targets: ["CPU Standard Library Integration"]),
+        .library(name: "CPU Foundation Library Integration", targets: ["CPU Foundation Library Integration"]),
+        .library(name: "CPU Test Support", targets: ["CPU Test Support"]),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(path: "../../swift-support/swift-cpu-shims"),
+],
     targets: [
-        .target(
-            name: "CPU Shims",
-            dependencies: []
-        ),
         .target(
             name: "CPU",
             dependencies: [
-                .target(name: "CPU Shims"),
-            ]
+                .product(name: "CPU Shims", package: "swift-cpu-shims"),
+            ],
+            path: "Sources/CPU"
+        ),
+        .target(
+            name: "CPU Standard Library Integration",
+            dependencies: [
+                .target(name: "CPU"),
+            ],
+            path: "Sources/CPU Standard Library Integration"
+        ),
+        .target(
+            name: "CPU Foundation Library Integration",
+            dependencies: [
+                .target(name: "CPU"),
+                .target(name: "CPU Standard Library Integration"),
+            ],
+            path: "Sources/CPU Foundation Library Integration"
         ),
         .target(
             name: "CPU Test Support",
@@ -45,14 +55,17 @@ let package = Package(
             dependencies: [
                 .target(name: "CPU"),
                 .target(name: "CPU Test Support"),
-            ]
+                .target(name: "CPU Standard Library Integration"),
+                .target(name: "CPU Foundation Library Integration"),
+            ],
+            path: "Tests/CPU Tests"
         ),
     ],
     swiftLanguageModes: [.v6]
 )
 
-for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
-    let ecosystem: [SwiftSetting] = [
+for target in package.targets {
+    target.swiftSettings = [
         .strictMemorySafety(),
         .enableUpcomingFeature("ExistentialAny"),
         .enableUpcomingFeature("InternalImportsByDefault"),
@@ -61,8 +74,4 @@ for target in package.targets where ![.system, .binary, .plugin, .macro].contain
         .enableExperimentalFeature("Lifetimes"),
         .enableUpcomingFeature("InferIsolatedConformances"),
     ]
-
-    let package: [SwiftSetting] = []
-
-    target.swiftSettings = (target.swiftSettings ?? []) + ecosystem + package
 }

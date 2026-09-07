@@ -1,6 +1,0 @@
-module CPU_Shims {
-    header "shim.h"
-    header "barrier.h"
-    header "atomic.h"
-    export *
-}
