@@ -1,3 +1,4 @@
+#if BinarySerializer
 import Testing
 
 @testable import CPU
@@ -64,3 +65,4 @@ struct `CPU.Timestamp Tests` {
         }
     }
 }
+#endif

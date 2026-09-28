@@ -1,3 +1,4 @@
+#if BinarySerializer
 import Testing
 
 @testable import CPU
@@ -58,3 +59,4 @@ extension CPU.Integrity.Cyclic.Castagnoli.Tests.`Edge Case` {
         #expect(combinedSoftware == chained)
     }
 }
+#endif

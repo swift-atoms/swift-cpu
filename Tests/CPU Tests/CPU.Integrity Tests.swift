@@ -1,3 +1,4 @@
+#if BinarySerializer
 import Testing
 
 @testable import CPU
@@ -94,3 +95,4 @@ struct `CPU.Integrity.Cyclic.Castagnoli Tests` {
         #expect(crc != 0)
     }
 }
+#endif
