@@ -18,27 +18,51 @@ let package = Package(
         .library(name: "CPU Test Support", targets: ["CPU Test Support"]),
     ],
     traits: [
-        .trait(name: "BinarySerializer", description: "BinarySerializer integration"),
+        .trait(name: "BinarySerializer", description: "BinarySerializer integration")
 
     ],
     dependencies: [
         .package(url: "https://github.com/swift-atoms/swift-byte.git", branch: "main"),
 
-        .package(url: "https://github.com/swift-atoms/swift-binary.git", branch: "main", traits: [.trait(name: "Serializer", condition: .when(traits: ["BinarySerializer"]))]),
+        .package(
+            url: "https://github.com/swift-atoms/swift-binary.git",
+            branch: "main",
+            traits: [.trait(name: "Serializer", condition: .when(traits: ["BinarySerializer"]))]
+        ),
 
         .package(url: "https://github.com/swift-institute/swift-cpu-shims.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-cardinal.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-ordinal.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-tagged.git", branch: "main"),
 
-],
+    ],
     targets: [
-        .testTarget(name: "Decision CPU Binary Serializer Tests", dependencies: [.target(name: "CPU"), .product(name: "Binary", package: "swift-binary", condition: .when(traits: ["BinarySerializer"])), .product(name: "Byte", package: "swift-byte", condition: .when(traits: ["BinarySerializer"]))], path: "Tests/Decision CPU Binary Serializer Tests"),
+        .testTarget(
+            name: "Decision CPU Binary Serializer Tests",
+            dependencies: [
+                .target(name: "CPU"),
+                .product(
+                    name: "Binary",
+                    package: "swift-binary",
+                    condition: .when(traits: ["BinarySerializer"])
+                ),
+                .product(
+                    name: "Byte",
+                    package: "swift-byte",
+                    condition: .when(traits: ["BinarySerializer"])
+                ),
+            ],
+            path: "Tests/Decision CPU Binary Serializer Tests"
+        ),
 
         .target(
             name: "CPU",
             dependencies: [
-                .product(name: "Binary", package: "swift-binary", condition: .when(traits: ["BinarySerializer"])),
+                .product(
+                    name: "Binary",
+                    package: "swift-binary",
+                    condition: .when(traits: ["BinarySerializer"])
+                ),
 
                 .product(name: "CPU Shims", package: "swift-cpu-shims"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
@@ -47,18 +71,18 @@ let package = Package(
             ],
             path: "Sources/CPU"
         ),
-        
+
         .target(
             name: "CPU Foundation Integration",
             dependencies: [
-                .target(name: "CPU"),
+                .target(name: "CPU")
             ],
             path: "Sources/CPU Foundation Integration"
         ),
         .target(
             name: "CPU Test Support",
             dependencies: [
-                .target(name: "CPU"),
+                .target(name: "CPU")
             ],
             path: "Tests/Support"
         ),
