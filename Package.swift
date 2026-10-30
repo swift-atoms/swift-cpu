@@ -30,7 +30,6 @@ let package = Package(
             traits: [.trait(name: "Serializer", condition: .when(traits: ["BinarySerializer"]))]
         ),
 
-        .package(url: "https://github.com/swift-institute/swift-cpu-shims.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-cardinal.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-ordinal.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-tagged.git", branch: "main"),
@@ -64,12 +63,17 @@ let package = Package(
                     condition: .when(traits: ["BinarySerializer"])
                 ),
 
-                .product(name: "CPU Shims", package: "swift-cpu-shims"),
+                .target(name: "CPU Shims"),
                 .product(name: "Cardinal", package: "swift-cardinal"),
                 .product(name: "Ordinal", package: "swift-ordinal"),
                 .product(name: "Tagged", package: "swift-tagged"),
             ],
             path: "Sources/CPU"
+        ),
+        .target(
+            name: "CPU Shims",
+            path: "Sources/CPU Shims",
+            publicHeadersPath: "include"
         ),
 
         .target(
