@@ -1,5 +1,6 @@
 extension CPU.Cache {
 
+    @safe
     public struct Padded<T: ~Copyable>: ~Copyable {
 
         @usableFromInline
