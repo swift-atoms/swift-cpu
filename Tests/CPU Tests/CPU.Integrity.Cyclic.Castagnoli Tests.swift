@@ -2,14 +2,14 @@ import Testing
 
 @testable import CPU
 
-extension CPU.Integrity.Cyclic.Castagnoli {
+extension `CPU.Integrity.Cyclic.Castagnoli Tests` {
     @Suite struct Tests {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
     }
 }
 
-extension CPU.Integrity.Cyclic.Castagnoli.Tests.Unit {
+extension `CPU.Integrity.Cyclic.Castagnoli Tests`.Tests.Unit {
     @Test
     func `software fallback matches known CRC-32C test vector`() {
 
@@ -37,7 +37,7 @@ extension CPU.Integrity.Cyclic.Castagnoli.Tests.Unit {
     }
 }
 
-extension CPU.Integrity.Cyclic.Castagnoli.Tests.`Edge Case` {
+extension `CPU.Integrity.Cyclic.Castagnoli Tests`.Tests.`Edge Case` {
     @Test
     func `software fallback chains seed the same way as a single pass`() {
         let data1 = Array("abc".utf8)

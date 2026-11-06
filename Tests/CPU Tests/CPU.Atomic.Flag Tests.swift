@@ -2,13 +2,15 @@ import Testing
 
 @testable import CPU
 
-extension CPU.Atomic.Flag {
+enum `CPU.Atomic.Flag Tests` {}
+
+extension `CPU.Atomic.Flag Tests` {
     @Suite struct Tests {
         @Suite struct Unit {}
     }
 }
 
-extension CPU.Atomic.Flag.Tests.Unit {
+extension `CPU.Atomic.Flag Tests`.Tests.Unit {
     @Test
     func `set defaults isSet to false until called`() {
         let flag = CPU.Atomic.Flag()
