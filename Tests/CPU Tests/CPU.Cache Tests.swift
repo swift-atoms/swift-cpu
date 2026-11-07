@@ -7,7 +7,9 @@ struct `CPU.Cache Tests` {
     @Suite struct Unit {}
     @Suite struct `Edge Case` {}
     @Suite struct Integration {}
+}
 
+extension `CPU.Cache Tests` {
     @Suite
     struct `Prefetch Tests` {
         @Test

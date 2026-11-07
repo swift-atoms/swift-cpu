@@ -8,6 +8,18 @@ struct `CPU.Barrier Tests` {
     @Suite struct `Edge Case` {}
     @Suite struct Integration {}
 
+    @Test
+    func `compiler barrier alone does not synchronize threads`() {
+
+        var value = 0
+        CPU.Barrier.compiler()
+        value = 1
+        CPU.Barrier.compiler()
+        #expect(value == 1)
+    }
+}
+
+extension `CPU.Barrier Tests` {
     @Suite
     struct `Compiler Tests` {
         @Test
@@ -48,15 +60,5 @@ struct `CPU.Barrier Tests` {
                 CPU.Barrier.hardware.full()
             }
         }
-    }
-
-    @Test
-    func `compiler barrier alone does not synchronize threads`() {
-
-        var value = 0
-        CPU.Barrier.compiler()
-        value = 1
-        CPU.Barrier.compiler()
-        #expect(value == 1)
     }
 }

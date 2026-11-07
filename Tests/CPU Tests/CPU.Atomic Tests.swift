@@ -22,7 +22,9 @@ struct `CPU.Atomic Tests` {
     func `Store namespace exists`() {
         _ = CPU.Atomic.Store.self
     }
+}
 
+extension `CPU.Atomic Tests` {
     @Suite
     struct `Load Ordering Tests` {
         @Test
