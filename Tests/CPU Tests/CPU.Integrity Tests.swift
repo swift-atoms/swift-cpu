@@ -12,11 +12,11 @@ struct `CPU.Integrity.Cyclic.Castagnoli Tests` {
     func `compute returns consistent results`() {
         let data: [UInt8] = [0x01, 0x02, 0x03, 0x04, 0x05]
 
-        let crc1 = unsafe data.withUnsafeBytes { buffer in
+        let crc1 = data.withUnsafeBytes { buffer in
             unsafe CPU.Integrity.Cyclic.Castagnoli.compute(buffer)
         }
 
-        let crc2 = unsafe data.withUnsafeBytes { buffer in
+        let crc2 = data.withUnsafeBytes { buffer in
             unsafe CPU.Integrity.Cyclic.Castagnoli.compute(buffer)
         }
 
@@ -27,7 +27,7 @@ struct `CPU.Integrity.Cyclic.Castagnoli Tests` {
     func `compute with empty data returns seed`() {
         let data: [UInt8] = []
 
-        let crc = unsafe data.withUnsafeBytes { buffer in
+        let crc = data.withUnsafeBytes { buffer in
             unsafe CPU.Integrity.Cyclic.Castagnoli.compute(buffer, seed: 0)
         }
 
@@ -40,14 +40,14 @@ struct `CPU.Integrity.Cyclic.Castagnoli Tests` {
         let data2: [UInt8] = [0x04, 0x05, 0x06]
         let combined: [UInt8] = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06]
 
-        let crcCombined = unsafe combined.withUnsafeBytes { buffer in
+        let crcCombined = combined.withUnsafeBytes { buffer in
             unsafe CPU.Integrity.Cyclic.Castagnoli.compute(buffer)
         }
 
-        let crcPart1 = unsafe data1.withUnsafeBytes { buffer in
+        let crcPart1 = data1.withUnsafeBytes { buffer in
             unsafe CPU.Integrity.Cyclic.Castagnoli.compute(buffer)
         }
-        let crcChained = unsafe data2.withUnsafeBytes { buffer in
+        let crcChained = data2.withUnsafeBytes { buffer in
             unsafe CPU.Integrity.Cyclic.Castagnoli.compute(buffer, seed: crcPart1)
         }
 
@@ -59,7 +59,7 @@ struct `CPU.Integrity.Cyclic.Castagnoli Tests` {
 
         let data = Array("123456789".utf8)
 
-        let crc = unsafe data.withUnsafeBytes { buffer in
+        let crc = data.withUnsafeBytes { buffer in
             unsafe CPU.Integrity.Cyclic.Castagnoli.compute(buffer)
         }
 
@@ -71,11 +71,11 @@ struct `CPU.Integrity.Cyclic.Castagnoli Tests` {
         let data1: [UInt8] = [0x01, 0x02, 0x03]
         let data2: [UInt8] = [0x01, 0x02, 0x04]
 
-        let crc1 = unsafe data1.withUnsafeBytes { buffer in
+        let crc1 = data1.withUnsafeBytes { buffer in
             unsafe CPU.Integrity.Cyclic.Castagnoli.compute(buffer)
         }
 
-        let crc2 = unsafe data2.withUnsafeBytes { buffer in
+        let crc2 = data2.withUnsafeBytes { buffer in
             unsafe CPU.Integrity.Cyclic.Castagnoli.compute(buffer)
         }
 
@@ -87,7 +87,7 @@ struct `CPU.Integrity.Cyclic.Castagnoli Tests` {
 
         let data = [UInt8](repeating: 0xAB, count: 1024 * 1024)
 
-        let crc = unsafe data.withUnsafeBytes { buffer in
+        let crc = data.withUnsafeBytes { buffer in
             unsafe CPU.Integrity.Cyclic.Castagnoli.compute(buffer)
         }
 

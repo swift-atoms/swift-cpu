@@ -15,7 +15,7 @@ extension `CPU.Integrity.Cyclic.Castagnoli Tests`.Tests.Unit {
 
         let data = Array("123456789".utf8)
 
-        let crc = unsafe data.withUnsafeBytes { buffer in
+        let crc = data.withUnsafeBytes { buffer in
             unsafe CPU.Integrity.Cyclic.Castagnoli.software(buffer)
         }
 
@@ -26,10 +26,10 @@ extension `CPU.Integrity.Cyclic.Castagnoli Tests`.Tests.Unit {
     func `software fallback agrees with the hardware path on this host`() {
         let data = Array("The quick brown fox jumps over the lazy dog".utf8)
 
-        let hardware = unsafe data.withUnsafeBytes { buffer in
+        let hardware = data.withUnsafeBytes { buffer in
             unsafe CPU.Integrity.Cyclic.Castagnoli.compute(buffer)
         }
-        let software = unsafe data.withUnsafeBytes { buffer in
+        let software = data.withUnsafeBytes { buffer in
             unsafe CPU.Integrity.Cyclic.Castagnoli.software(buffer)
         }
 
@@ -44,14 +44,14 @@ extension `CPU.Integrity.Cyclic.Castagnoli Tests`.Tests.`Edge Case` {
         let data2 = Array("def".utf8)
         let combined = Array("abcdef".utf8)
 
-        let combinedSoftware = unsafe combined.withUnsafeBytes { buffer in
+        let combinedSoftware = combined.withUnsafeBytes { buffer in
             unsafe CPU.Integrity.Cyclic.Castagnoli.software(buffer)
         }
 
-        let part1 = unsafe data1.withUnsafeBytes { buffer in
+        let part1 = data1.withUnsafeBytes { buffer in
             unsafe CPU.Integrity.Cyclic.Castagnoli.software(buffer)
         }
-        let chained = unsafe data2.withUnsafeBytes { buffer in
+        let chained = data2.withUnsafeBytes { buffer in
             unsafe CPU.Integrity.Cyclic.Castagnoli.software(buffer, seed: part1)
         }
 
