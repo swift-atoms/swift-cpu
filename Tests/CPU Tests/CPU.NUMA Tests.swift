@@ -2,7 +2,7 @@ import CPU
 import Testing
 
 @Suite struct CPUNUMATests {
-    @Test func nodeKeepsItsProcessors() {
+    @Test func `node keeps its processors`() {
         let processors: Set<CPU.Logical.ID> = [
             CPU.Logical.ID(_unchecked: Ordinal(0 as UInt)),
             CPU.Logical.ID(_unchecked: Ordinal(1 as UInt)),
